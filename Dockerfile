@@ -1,6 +1,8 @@
 FROM node:alpine
 
-RUN sed -i 's|dl-cdn.alpinelinux.org|foobar.turbo.net.id|' /etc/apk/repositories \
+RUN apk update \
+    && apk add ca-certificates \
+    && sed -i 's|dl-cdn.alpinelinux.org|foobar.turbo.net.id|' /etc/apk/repositories \
     && apk add tzdata \
     && cp /usr/share/zoneinfo/Asia/Jakarta /etc/localtime \
     && apk del tzdata 
