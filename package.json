@@ -1,0 +1,23 @@
+{
+  "name": "bca-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.23.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "oauth": "^0.9.15",
+    "pg": "^8.7.1",
+    "qs": "^6.10.1",
+    "uuid": "^8.3.2",
+    "validation": "0.0.1",
+    "validator": "^13.6.0"
+  }
+}
