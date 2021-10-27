@@ -1,4 +1,4 @@
-const Helper = require("../libs/helper")
+const Helper = require("../libs/Helper")
 
 
 MAX_ITERATION = 3

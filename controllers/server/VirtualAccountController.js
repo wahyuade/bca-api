@@ -1,4 +1,4 @@
-const Helper = require("../../libs/helper")
+const Helper = require("../../libs/Helper")
 const Postgresql = require("../../libs/postgresql")
 const Payment = require("../../repositories/Payment")
 const Transaction = require("../../repositories/Transaction")

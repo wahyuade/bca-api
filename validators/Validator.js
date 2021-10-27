@@ -1,6 +1,6 @@
 const validation = require('validation')
 const validator = require('validator')
-const Helper = require('../libs/helper')
+const Helper = require('../libs/Helper')
 
 class Validator {
     async validate(payload, required = [], optional = []) {
