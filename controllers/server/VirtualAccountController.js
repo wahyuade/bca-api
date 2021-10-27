@@ -13,8 +13,9 @@ class _BaseResponse {
     DetailBills = []
     FreeTexts = []
 
-    constructor(request_id) {
+    constructor(request_id, customer_number) {
         this.RequestID = request_id
+        this.CustomerNumber = customer_number
     }
 
     setError(indonesia, english) {
@@ -30,6 +31,7 @@ class _BaseResponse {
                     English: english
                 }
             }
+            this.CustomerNumber = undefined
         }
     }
     setErrorValidation(error) {
@@ -44,11 +46,10 @@ class _InquiryResponse extends _BaseResponse {
         English: "Internal Server Error"
     }
     SubCompany = process.env.SUB_COMPANY_CODE_VA
-    constructor(request_id) {
-        super(request_id)
+    constructor(request_id, customer_number) {
+        super(request_id, customer_number)
     }
     setTransaction(transaction) {
-        this.CustomerNumber = transaction.customer_number
         this.CustomerName = transaction.customer_name
         this.CurrencyCode = transaction.currency
         this.AdditionalData = transaction.trx_id
@@ -68,8 +69,8 @@ class _PaymentResponse extends _BaseResponse {
         English: "Internal Server Error"
     }
 
-    constructor(request_id) {
-        super(request_id)
+    constructor(request_id, customer_number) {
+        super(request_id, customer_number)
     }
     setPayment(payment) {
         this.PaymentFlagStatus = '00'
@@ -89,7 +90,7 @@ class _PaymentResponse extends _BaseResponse {
 class _VirtualAccountController extends Controller {
     async bills(req, res) {
         const inquiryRequest = req.body
-        const inquiryResponse = new _InquiryResponse(inquiryRequest.RequestID)
+        const inquiryResponse = new _InquiryResponse(inquiryRequest.RequestID, inquiryRequest.CustomerNumber)
         const pg = new Postgresql()
         await pg.startTransaction()
         try {
@@ -117,6 +118,7 @@ class _VirtualAccountController extends Controller {
                     english: "CompanyCode is not match"
                 }
             }
+            inquiryRequest.CustomerNumber = `${inquiryRequest.CompanyCode}${inquiryRequest.CustomerNumber}`
             if (!(await VirtualAccount.isActive(pg, inquiryRequest.CustomerNumber))) {
                 throw {
                     indonesia: "Tagihan tidak ditemukan",
@@ -150,7 +152,7 @@ class _VirtualAccountController extends Controller {
     }
     async payments(req, res) {
         const paymentRequest = req.body
-        const paymentResponse = new _PaymentResponse(paymentRequest.RequestID)
+        const paymentResponse = new _PaymentResponse(paymentRequest.RequestID, paymentRequest.CustomerNumber)
         const pg = new Postgresql()
         await pg.startTransaction()
         try {
@@ -188,6 +190,7 @@ class _VirtualAccountController extends Controller {
             paymentRequest.TransactionDate = Helper.stringLocalTimeToDate(
                 paymentRequest.TransactionDate
             )
+            paymentRequest.CustomerNumber = `${paymentRequest.CompanyCode}${paymentRequest.CustomerNumber}`
             let transaction = await Transaction.find(
                 pg,
                 paymentRequest.CustomerNumber,
