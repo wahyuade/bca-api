@@ -209,10 +209,16 @@ class _VirtualAccountController extends Controller {
                     english: "Failed to receive the payment"
                 }
             }
-            if (transaction.amount != payment.paid_amount) {
+            if (transaction.amount != payment.total_amount) {
                 throw {
                     indonesia: "Nominal pembayaran tidak sesuai",
                     english: "Amount does not match with the billing"
+                }
+            }
+            if (transaction.status == Transaction.TRANSACTION_PAID) {
+                throw {
+                    indonesia: "Tagihan sudah lunas",
+                    english: "Transaction already paid"
                 }
             }
             if (transaction.status == Transaction.TRANSACTION_UNPAID) {
