@@ -10,7 +10,7 @@ const CallbackController = require("./CallbackController")
 
 class _BaseResponse {
     CompanyCode = process.env.COMPANY_CODE_VA
-    DetailBills = []
+    DetailBills = null
     FreeTexts = []
 
     constructor(request_id, customer_number) {
