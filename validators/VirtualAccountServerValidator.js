@@ -4,7 +4,7 @@ class _VirtualAccountServerValidator extends Validator {
     constructor() {
         super()
         this.CompanyCode = ['string:max=5', 'string:must_in=0123456789']
-        this.CompanyNumber = ['string:must_in=0123456789']
+        this.CustomerNumber = ['string:must_in=0123456789']
         this.RequestID = ['trim']
         this.ChannelType = ['enum:6010,6011,6012,6013,6014,6015,6016,6017,6018']
         this.FlagAdvice = ['enum:Y,N']
