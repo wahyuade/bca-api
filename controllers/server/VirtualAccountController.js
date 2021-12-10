@@ -19,6 +19,7 @@ class _BaseResponse {
     }
 
     setError(indonesia, english) {
+        this.setDefaultErrorValue()
         if (indonesia != undefined && english != undefined) {
             if (this instanceof _InquiryResponse) {
                 this.InquiryReason = {
@@ -32,19 +33,23 @@ class _BaseResponse {
                 }
             }
         }
-        this.SubCompany = ""
-        this.CustomerName = ""
-        this.CurrencyCode = ""
-        this.AdditionalData = ""
-        this.TotalAmount = ""
     }
-    setErrorValidation(error) {
+    setDefaultErrorValue() {
         // this.Error = error
-        this.SubCompany = ""
-        this.CustomerName = ""
-        this.CurrencyCode = ""
-        this.AdditionalData = ""
-        this.TotalAmount = ""
+        if (this instanceof _InquiryResponse) {
+            this.SubCompany = ""
+            this.CustomerName = ""
+            this.CurrencyCode = ""
+            this.AdditionalData = ""
+            this.TotalAmount = ""
+        } else if (this instanceof _PaymentResponse) {
+            this.CustomerName = ""
+            this.CurrencyCode = ""
+            this.PaidAmount = ""
+            this.TotalAmount = ""
+            this.TransactionDate = Helper.dateToStringLocalTime(new Date())
+            this.AdditionalData = ""
+        }
     }
 }
 
@@ -115,7 +120,6 @@ class _VirtualAccountController extends Controller {
                     ]
                 )
             } catch (e) {
-                inquiryResponse.setErrorValidation(e)
                 throw {
                     indonesia: "Permintaan tidak sesuai format",
                     english: "Request format does not correct"
@@ -184,7 +188,6 @@ class _VirtualAccountController extends Controller {
                     ]
                 )
             } catch (e) {
-                paymentResponse.setErrorValidation(e)
                 throw {
                     indonesia: "Permintaan tidak sesuai format",
                     english: "Request format does not correct"
