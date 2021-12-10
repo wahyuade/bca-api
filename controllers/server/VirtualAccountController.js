@@ -169,6 +169,7 @@ class _VirtualAccountController extends Controller {
         await pg.startTransaction()
         try {
             try {
+                paymentResponse.TransactionDate = paymentRequest.TransactionDate
                 await VirtualAccountServerValidator.validate(
                     paymentRequest,
                     [
@@ -198,7 +199,6 @@ class _VirtualAccountController extends Controller {
                     english: "CompanyCode is not match"
                 }
             }
-            paymentResponse.TransactionDate = paymentRequest.TransactionDate
             paymentRequest.TransactionDate = Helper.stringLocalTimeToDate(
                 paymentRequest.TransactionDate
             )
