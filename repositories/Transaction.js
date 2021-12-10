@@ -54,7 +54,7 @@ class _Transaction {
 
     async find(pg, customer_number, transaction_date) {
         const { rows: transaction } = await pg.connection.query(
-            `SELECT * FROM ${self.getTable()} WHERE customer_number = $1 AND created <= $2 AND expired >= $2 LIMIT 1`, [
+            `SELECT * FROM ${self.getTable()} WHERE customer_number = $1 AND created <= $2 AND expired >= $2 LIMIT 1 FOR UPDATE`, [
                 customer_number,
                 transaction_date
             ]
