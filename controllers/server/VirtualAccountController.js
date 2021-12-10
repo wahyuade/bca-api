@@ -47,7 +47,6 @@ class _BaseResponse {
             this.CurrencyCode = ""
             this.PaidAmount = ""
             this.TotalAmount = ""
-            this.TransactionDate = Helper.dateToStringLocalTime(new Date())
             this.AdditionalData = ""
         }
     }
@@ -199,6 +198,7 @@ class _VirtualAccountController extends Controller {
                     english: "CompanyCode is not match"
                 }
             }
+            paymentResponse.TransactionDate = paymentRequest.TransactionDate
             paymentRequest.TransactionDate = Helper.stringLocalTimeToDate(
                 paymentRequest.TransactionDate
             )
