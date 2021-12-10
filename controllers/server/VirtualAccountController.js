@@ -31,8 +31,12 @@ class _BaseResponse {
                     English: english
                 }
             }
-            this.CustomerNumber = undefined
         }
+        this.SubCompany = ""
+        this.CustomerName = ""
+        this.CurrencyCode = ""
+        this.AdditionalData = ""
+        this.TotalAmount = ""
     }
     setErrorValidation(error) {
         // this.Error = error
