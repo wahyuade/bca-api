@@ -35,7 +35,12 @@ class _BaseResponse {
         }
     }
     setErrorValidation(error) {
-        this.Error = error
+        // this.Error = error
+        this.SubCompany = ""
+        this.CustomerName = ""
+        this.CurrencyCode = ""
+        this.AdditionalData = ""
+        this.TotalAmount = ""
     }
 }
 
@@ -52,7 +57,7 @@ class _InquiryResponse extends _BaseResponse {
     setTransaction(transaction) {
         this.CustomerName = transaction.customer_name
         this.CurrencyCode = transaction.currency
-        this.AdditionalData = transaction.trx_id
+        this.AdditionalData = ""
         this.TotalAmount = transaction.amount
         this.InquiryStatus = "00"
         this.InquiryReason = {
@@ -83,7 +88,7 @@ class _PaymentResponse extends _BaseResponse {
         this.PaidAmount = payment.paid_amount
         this.TotalAmount = payment.total_amount
         this.TransactionDate = Helper.dateToStringLocalTime(payment.transaction_date)
-        this.AdditionalData = payment.additional_data
+        this.AdditionalData = ""
     }
 }
 
