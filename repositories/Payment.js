@@ -2,7 +2,7 @@ class _Payment {
     async create(pg, payment) {
         const timestamp = new Date()
         try {
-            var { rows: payment } = await pg.connection.query(
+            var { rows: paymentDb } = await pg.connection.query(
                 `INSERT INTO ${self.getTable()} (
                     reference,
                     company_code,
@@ -53,14 +53,17 @@ class _Payment {
                 ]
             )
         } catch (e) {
-            var { rows: payment } = await pg.connection.query(
+            var { rows: paymentDb } = await pg.connection.query(
                 `SELECT * FROM ${self.getTable()} WHERE reference = $1`, [
                     payment.Reference
                 ]
             )
+            if (paymentDb.length == 0 || (paymentDb.length == 1 && String(paymentDb[0].request_id) != String(payment.RequestID))) {
+                paymentDb = []
+            }
         }
-        if (payment.length == 1) {
-            return payment[0]
+        if (paymentDb.length == 1) {
+            return paymentDb[0]
         }
     }
     getTable() {
