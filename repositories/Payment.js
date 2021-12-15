@@ -59,7 +59,7 @@ class _Payment {
                 ]
             )
             if (paymentDb.length == 0 || (paymentDb.length == 1 && String(paymentDb[0].request_id) != String(payment.RequestID))) {
-                paymentDb = []
+                paymentDb = [null]
             }
         }
         if (paymentDb.length == 1) {
