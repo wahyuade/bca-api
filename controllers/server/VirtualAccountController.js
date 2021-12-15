@@ -240,6 +240,10 @@ class _VirtualAccountController extends Controller {
             }
             paymentResponse.setPayment(payment)
             await pg.commit()
+            /**
+             * Logging purpose
+             */
+             req.trx_id = transaction.trx_id
         } catch(e) {
             console.log(e)
             paymentResponse.setError(e.indonesia, e.english)
